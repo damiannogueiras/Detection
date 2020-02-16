@@ -1,18 +1,21 @@
-import cv2 as cv
-import imutils
-from imutils.video import FPS
-from imutils.video import VideoStream
+import numpy as np
+import cv2
 
-# cap = cv.VideoCapture(1)
-vs = VideoStream(src=1).start()
+cv2.startWindowThread()
+cap = cv2.VideoCapture(1)
 
-fps = FPS.start()
-
-while True:
-
-    success, frame = vs.read()
-    frame = imutils.resize(frame, width=500)
-    cv.imshow('Video', frame)
-    fps.update()
+while(True):
+    # reading the frame
+    ret, frame = cap.read()
+    # displaying the frame
+    cv2.imshow('frame', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        # breaking the loop if the user types q
+        # note that the video window must be highlighted!
+        break
 
 cap.release()
+cv2.destroyAllWindows()
+# the following is necessary on the mac,
+# maybe not on other platforms:
+cv2.waitKey(1)
